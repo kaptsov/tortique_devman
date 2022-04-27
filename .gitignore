@@ -1,0 +1,5 @@
+/bakecake/migrations/
+/venv/
+db.sqlite3
+._.DS_Store
+
