@@ -260,31 +260,40 @@ class Orders(models.Model):
     )
     title = models.TextField(
         verbose_name="Надпись",
-        blank=True,
+        blank=True
     )
     comment = models.TextField(
         verbose_name="Комментарий к заказу",
-        blank=True,
+        blank=True
     )
     delivery_address = models.TextField(
         verbose_name="Адрес доставки",
+        blank=True,
+        null=True
     )
     delivery_date = models.DateField(
         verbose_name="Дата доставки",
+        blank=True,
+        null=True
     )
     delivery_time = models.DateTimeField(
         verbose_name="Время доставки",
+        blank=True,
+        null=True
     )
     cost = models.DecimalField(
         max_digits=6,
         decimal_places=2,
         verbose_name="Стоимость заказа",
+        blank=True,
+        null=True
     )
     status = models.ForeignKey(
         OrderStatuses,
         related_name="statuses",
         verbose_name="Статус заказа",
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         choices=OrderStatuses.ORDER_STATUSES_CHOICES
     )
@@ -292,6 +301,7 @@ class Orders(models.Model):
         Levels,
         verbose_name="Количество уровней",
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         choices=Levels.LEVEL_CHOICES
     )
@@ -299,6 +309,7 @@ class Orders(models.Model):
         Forms,
         verbose_name="Форма",
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         choices=Forms.FORMS_CHOICES
     )
@@ -306,6 +317,7 @@ class Orders(models.Model):
         Topping,
         verbose_name="Топпинг",
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         choices=Topping.TOPPING_CHOICES
     )
@@ -313,6 +325,7 @@ class Orders(models.Model):
         Berries,
         verbose_name="Ягоды",
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         choices=Berries.BERRY_CHOICES
     )
@@ -320,6 +333,7 @@ class Orders(models.Model):
         Decors,
         verbose_name="Декор",
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
         choices=Decors.DECOR_CHOICES
     )
