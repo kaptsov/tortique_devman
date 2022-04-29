@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.views.generic import View
-from .forms import UserForm, OrderForm, CustomerForm
+from django.shortcuts import render
+from django.views.generic.edit import FormView
+from .forms import MyForm, OrderForm, CustomerForm
 from django.forms.models import inlineformset_factory
 from .models import Orders, Customers
 
@@ -31,34 +30,16 @@ def index(request):
     return render(request, 'public/index.html', data)
 
 
-class UserFormView(View):
+class MyRegisterFormView(FormView):
+    form_class = MyForm
 
-    form_class = UserForm
-    template_name = 'registration/register.html'
+    success_url = 'public/lk.html'
+    template_name = 'registration/rega.html'
 
-    # получаем форму
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
+    def form_valid(self, form):
+        form.save()
+        return super(MyRegisterFormView, self).form_valid(form)
 
-    # посылаем данные
-    def post(self, request):
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            user = form.save(commit=False)
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-
-            user.set_password(password)
-            user.save()
-
-            ###
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('exam:index')
-
-        return render(request, self.template_name, {'form': form})
+    def form_invalid(self, form):
+        return super(MyRegisterFormView, self).form_invalid(form)
 
