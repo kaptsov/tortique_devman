@@ -1,16 +1,17 @@
 from django.contrib.auth.models import User
-from django.forms import ModelForm, PasswordInput, CharField
+from django.contrib.auth.forms import UserCreationForm
+from django.forms import ModelForm
 from django import forms
 from .models import Orders, Customers
 
 
-class UserForm(ModelForm):
+class MyForm(UserCreationForm):
 
-    password = CharField(widget=PasswordInput, label='Пароль')
-
-    class Meta(object):
+    email = forms.EmailField(max_length=200, help_text='Required')
+    
+    class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = ('username', 'email', 'password1', 'password2')
 
 
 class OrderForm(ModelForm):
