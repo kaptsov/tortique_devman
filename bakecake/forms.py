@@ -13,27 +13,3 @@ class MyForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
-
-class OrderForm(ModelForm):
-
-    class Meta:
-        model = Orders
-        fields = [
-            'level',
-            'form',
-            'topping',
-            'berries',
-            'decor',
-            'title',
-            'comment'
-        ]
-
-
-class CustomerForm(ModelForm):
-    class Meta:
-        model = Customers
-        fields = [
-            'first_name',
-            'phone_number',
-            'address'
-        ]
