@@ -8,23 +8,8 @@ from .models import Orders, Customers
 
 def index(request):
     if request.method == 'POST':
-        order_form = OrderForm(request.POST)
-        customer_form = CustomerForm(request.POST)
-        print(order_form.errors)
-        print(customer_form.errors)
-        if order_form.is_valid() and customer_form.is_valid():
-            customer = customer_form.save()
-            order = order_form.save(commit=False)
-            print(dir(order))
-
-    order_form = OrderForm()
-    customer_form = CustomerForm()
-
-    data = {
-        'form': order_form,
-        'customer_form': customer_form
-    }
-    return render(request, 'public/index.html', data)
+        print(dict(request.POST.items()))
+    return render(request, 'public/index.html')
 
 
 class MyRegisterFormView(FormView):
