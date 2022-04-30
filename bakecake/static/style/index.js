@@ -128,7 +128,10 @@ Vue.createApp({
         },
         SubmitOrder() {
             //Тут выведен в консоль объект, описывающий заказ полностью. Сработает только после прохождения валидации 2ой формы:
-            console.log(JSON.stringify({
+            axios.create({
+                xsrfCookieName: 'csrftoken',
+                xsrfHeaderName: "X-CSRFTOKEN",
+            }).post('', JSON.stringify({
                 Cost: this.Cost,
                 Levels: this.DATA.Levels[this.Levels],
                 Form: this.DATA.Forms[this.Form],
@@ -145,6 +148,12 @@ Vue.createApp({
                 Time: this.Time,
                 DelivComments: this.DelivComments,
             }, null ,2))
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
         }
     },
     computed: {
