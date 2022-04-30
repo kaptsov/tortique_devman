@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from django.views.generic.edit import FormView
-from .forms import MyForm, OrderForm, CustomerForm
+from .forms import MyForm
 from .models import Orders, Customers
 
 
