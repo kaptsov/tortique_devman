@@ -2,4 +2,5 @@
 /venv/
 db.sqlite3
 ._.DS_Store
-
+__pycache__/
+.idea/
