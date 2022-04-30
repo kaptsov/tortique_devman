@@ -2,26 +2,43 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from django.views.generic.edit import FormView
-from .forms import MyForm
+from .forms import UserForm
 from .models import Orders, Customers
 
 
 def index(request):
+
     if request.method == 'POST':
         print(dict(request.POST.items()))
     return render(request, 'public/index.html')
 
 
-class MyRegisterFormView(FormView):
-    form_class = MyForm
+class UserFormView(View):
 
-    success_url = 'public/lk.html'
+    form_class = UserForm
     template_name = 'registration/rega.html'
 
-    def form_valid(self, form):
-        form.save()
-        return super(MyRegisterFormView, self).form_valid(form)
+    # получаем форму
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
 
-    def form_invalid(self, form):
-        return super(MyRegisterFormView, self).form_invalid(form)
+    # посылаем данные
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('index')
+
+        return render(request, self.template_name, {'form': form})
 
