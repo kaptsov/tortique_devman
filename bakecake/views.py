@@ -6,6 +6,10 @@ from .forms import UserForm
 from .models import Orders, Customers
 
 
+def cart(request):
+    return render(request, 'login/lk.html')
+
+
 def index(request):
 
     if request.method == 'POST':
