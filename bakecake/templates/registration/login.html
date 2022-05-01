@@ -1,45 +1,26 @@
-{% extends "public/base.html" %}
-{% block title %}Вход{% endblock %}
+{% extends 'public/base.html' %}
+{% load bootstrap3 %}
+{% block title %}Login{% endblock %}
 {% block body %}
-<div class="well" align="right">
-	<div class="plain">
-		{% if form.errors %}
-		<p>Неверный логин или пароль. Попробуйте еще раз</p>
+    <div class="kpx_login">
+        <h3 class="kpx_authTitle">Login or <a href="{% url 'register' %}">Sign up</a></h3>
+        <div class="row kpx_row-sm-offset-3">
+            <div class="col-xs-12 col-sm-6">
+                <form class="kpx_loginForm" action="{% url 'login' %}" autocomplete="off" method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                    <hr/>
+                    {% buttons %}
+                        <button type="submit" class="btn btn-lg btn-outline-primary btn-block"><i
+                                class="fa fa-sign-in"></i>
+                            Login
+                        </button>
+                    {% endbuttons %}
+                </form>
+            </div>
+        </div>
 
-		{% endif %}
+    </div>
 
-		{% if next %}
-		    {% if user.is_authenticated %}
-		    <p>Ваш аккаунт не имеет доступа к этой странице.</p>
-		    {% else %}
-		    <p>Залогиньтесь, пожалуйста, чтобы увидеть эту страницу.</p>
-		    {% endif %}
-		{% endif %}
-<div class="input-group">
-  
-  
-
-		<form method="post" action="{% url 'exam:login' %}">
-		{% csrf_token %}
-		<table>
-		<tr>
-		    <span class="input-group-addon" id="basic-addon1"><td>{{ form.username.label_tag }}&nbsp;</td></span>
-		    <span class="input-group-addon" id="basic-addon1"><td>{{ form.username }}&nbsp;</td></span>
-		</tr>
-		<tr>
-		    <td>{{ form.password.label_tag }}&nbsp;</td>
-		    <td>{{ form.password }}&nbsp;</td>
-		</tr>
-		</table>
-		<br>
-		<input type="submit" value="Вход" />
-		<input type="hidden" name="next" value="{{ next }}" />
-		</form>
-		<br>
-		{# Assumes you setup the password_reset view in your URLconf #}
-		<p><a href="{% url 'exam:password_reset' %}">Забыли пароль?</a></p>
-		<p><a href="{% url 'exam:register' %}">Регистрация</a></p>
-	</div>
-</div>
-</div>
 {% endblock %}
