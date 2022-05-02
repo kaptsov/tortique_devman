@@ -54,7 +54,6 @@ def index(request):
         context['is_auth'] = True
         context['username'] = request.user.username
         context['user_first_name'] = user.first_name
-        context['user_phone_number'] = str(user.phone_number)
         context['user_email'] = user.email
 
     return render(request, 'public/index.html', context)
