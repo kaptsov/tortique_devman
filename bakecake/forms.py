@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User
 from django.forms import ModelForm, PasswordInput, CharField
 from django import forms
-from .models import Orders, Customers
+from .models import Orders
+from django.contrib.auth.models import User
 
 
 class LoginForm(forms.Form):
@@ -27,10 +27,9 @@ class OrderForm(ModelForm):
 
 class CustomerForm(ModelForm):
     class Meta:
-        model = Customers
+        model = User
         fields = [
-            'first_name',
-            'phone_number',
+            'username',
         ]
 
 

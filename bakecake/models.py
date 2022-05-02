@@ -1,37 +1,6 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from django.db import models
 
-
-class Customers(models.Model):
-
-    phone_number = models.CharField(
-        max_length=256,
-        blank=True,
-        default="",
-        verbose_name="Номер телефона заказчика",
-    )
-    first_name = models.CharField(
-        max_length=256,
-        blank=True,
-        default="",
-        verbose_name="Имя заказчика",
-    )
-    last_name = models.CharField(
-        max_length=256,
-        blank=True,
-        default="",
-        verbose_name="Фамилия заказчика",
-    )
-    address = models.TextField(
-        verbose_name="Адрес заказчика",
-    )
-
-    def __str__(self):
-        return f"Заказчик {self.first_name} {self.last_name}"
-
-    class Meta:
-        verbose_name = "Заказчик"
-        verbose_name_plural = "Заказчики"
 
 
 class OrderStatuses(models.Model):
@@ -254,7 +223,7 @@ class Decors(models.Model):
 class Orders(models.Model):
 
     customer = models.ForeignKey(
-        Customers,
+        User,
         related_name="customers",
         verbose_name="Заказчик",
         on_delete=models.PROTECT,

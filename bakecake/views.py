@@ -4,8 +4,7 @@ from django.views.generic import View
 from django.http import HttpResponseRedirect
 from .forms import UserForm, OrderForm, CustomerForm
 from django.urls import reverse
-from django.contrib.auth.models import User
-from .models import Orders, Customers, Levels, Forms, Topping, Decors, Berries
+from .models import Orders, User, Levels, Forms, Topping, Decors, Berries
 from django.forms.models import inlineformset_factory
 
 
@@ -21,11 +20,10 @@ def index(request):
     berries = Berries.objects.all()
     decors = Decors.objects.all()
 
-    order_form_set = inlineformset_factory(Customers, Orders, form=OrderForm)
+    order_form_set = inlineformset_factory(User, Orders, form=OrderForm)
     if request.method == 'POST':
         customer_form = CustomerForm(request.POST)
         print(customer_form)
-
         new_customer = customer_form.save()
         order_inline_formset = order_form_set(
             request.POST,
