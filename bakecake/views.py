@@ -10,9 +10,10 @@ from django.forms.models import inlineformset_factory
 
 def cart(request):
     user = User.objects.get(username=request.user.username)
-
+    user_orders = Orders.objects.filter(customer=user)
     context = {
         'user': user,
+        'user_orders': user_orders
     }
 
     return render(request, 'login/lk.html', context)
