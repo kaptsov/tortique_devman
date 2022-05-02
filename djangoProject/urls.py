@@ -13,7 +13,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', views.UserFormView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', views.logout_view, name='logout'),
     path('logout-then-login/', logout_then_login, name='logout_then_login'),
     path('cart/', views.cart, name='cart')
 ]

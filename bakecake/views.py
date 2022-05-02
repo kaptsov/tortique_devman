@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
-from django.views.generic.edit import FormView
+from django.http import HttpResponseRedirect
 from .forms import UserForm
+from django.urls import reverse
 from .models import Orders, Customers
 
 
@@ -12,8 +13,11 @@ def cart(request):
 
 def index(request):
 
+    form_class = UserForm
     if request.method == 'POST':
         print(dict(request.POST.items()))
+        form = form_class(request.POST)
+        print(form)
     return render(request, 'public/index.html')
 
 
@@ -46,3 +50,6 @@ class UserFormView(View):
 
         return render(request, self.template_name, {'form': form})
 
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("index"))
