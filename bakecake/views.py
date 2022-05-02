@@ -9,7 +9,13 @@ from django.forms.models import inlineformset_factory
 
 
 def cart(request):
-    return render(request, 'login/lk.html')
+    user = User.objects.get(username=request.user.username)
+
+    context = {
+        'user': user,
+    }
+
+    return render(request, 'login/lk.html', context)
 
 
 def index(request):
@@ -23,14 +29,16 @@ def index(request):
     order_form_set = inlineformset_factory(User, Orders, form=OrderForm)
     if request.method == 'POST':
         customer_form = CustomerForm(request.POST)
-        print(customer_form)
+        order_form = OrderForm(request.POST)
+        new_order = order_form.save()
+        print(new_order.level)
+       # print(levels.select_related())
         new_customer = customer_form.save()
         order_inline_formset = order_form_set(
             request.POST,
             request.FILES,
             instance=new_customer
         )
-        print(order_inline_formset)
         order_inline_formset.save()
 
     order_form = OrderForm()
