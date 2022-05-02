@@ -34,7 +34,7 @@
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="#">
+		<a class="navbar-brand" href="{% url 'index' %}">
             <img src="{% static 'style/img/Logo.svg' %}" href="{% url 'index' %}"  alt="CakeBake" class="mb-2">
 		</a>
 		<div class="collapse navbar-collapse justify-content-end" id="navbar">
@@ -56,16 +56,6 @@
 					<small class="fw-lighter text-decoration-none fs_12 cake_blue">Пн - Вс 10:00—20:00</small>
 				</li>
 				<li class="nav-item d-flex align-items-center">
-					<a class="nav-link fw-lighter me-1 cake_blue position-relative" href="{% url 'cart' %}">
-                        <img src="{% static 'style/img/shopping-cart.svg' %}" alt="shopping-cart">
-						<!--метка на иконке, убрать класс d-none чтоб появилась-->
-						<span class="position-absolute translate-middle badge rounded-pill cake__bg_pink fs_8 d-none">1</span>
-					</a>
-					<li><a class="nav-link fw-lighter me-1 cake_blue position-relative" href="{% url 'register' %}" >
-						<img src="{% static 'style/img/user.svg' %}" alt="">
-						<!--метка на иконке, убрать класс d-none чтоб появилась-->
-						<span class="position-absolute translate-middle badge rounded-pill cake__bg_pink fs_8 d-none">1</span>
-					</a></li>
 
                 <div class="dropdown">
                 {% if request.user.is_authenticated %}
@@ -73,13 +63,15 @@
                     Привет, {{ request.user }}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href={% url "cart" %}>Личный кабинет</a></li>
                 <li><a class="dropdown-item" href="{% url "logout" %}">Выход</a></li>
-                    {% else %}
+                   {% else %}
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     Авторизуйтесь
                 </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href={% url "login" %}>Вход</a></li>
+                    <li><a class="dropdown-item" href={% url "login" %}>Вход</a></li>
+                    <li><a class="dropdown-item" href={% url "register" %}>Регистрация</a></li>
                     {% endif %}
                     </ul>
                 </div>
