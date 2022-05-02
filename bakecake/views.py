@@ -4,7 +4,7 @@ from django.views.generic import View
 from django.http import HttpResponseRedirect
 from .forms import UserForm
 from django.urls import reverse
-from .models import Orders, Customers
+from .models import Orders, Customers, Levels, Forms, Topping, Decors, Berries
 
 
 def cart(request):
@@ -13,12 +13,20 @@ def cart(request):
 
 def index(request):
 
-    form_class = UserForm
-    if request.method == 'POST':
-        print(dict(request.POST.items()))
-        form = form_class(request.POST)
-        print(form)
-    return render(request, 'public/index.html')
+    levels = Levels.objects.all()
+    forms = Forms.objects.all()
+    toppings = Topping.objects.all()
+    berries = Berries.objects.all()
+    decors = Decors.objects.all()
+
+    return render(request, 'public/index.html', context={
+        'levels': levels,
+        't_forms': forms,
+        "toppings": toppings,
+        "berries": berries,
+        "decors": decors
+
+    })
 
 
 class UserFormView(View):
@@ -50,6 +58,7 @@ class UserFormView(View):
 
         return render(request, self.template_name, {'form': form})
 
+
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse('index'))
