@@ -67,19 +67,23 @@
 						<span class="position-absolute translate-middle badge rounded-pill cake__bg_pink fs_8 d-none">1</span>
 					</a></li>
 
+                <div class="dropdown">
                 {% if request.user.is_authenticated %}
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Привет, {{ request.user }}</a>
-                </li>
-                <li><a href="{% url "logout" %}"><span class="glyphicon glyphicon-log-out"></span> Выход</a></li>
-            {% else %}
-                <li><a href="{% url "login" %}"><span class="glyphicon glyphicon-log-in"></span> Вход</a></li>
-            {% endif %}
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Привет, {{ request.user }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{% url "logout" %}">Выход</a></li>
+                    {% else %}
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Авторизуйтесь
+                </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href={% url "login" %}>Вход</a></li>
+                    {% endif %}
+                    </ul>
+                </div>
 
-
-					<a class="nav-link fw-lighter cake_grey fs_12 d-none" href="#">
-
-					</a>
-				</li>
 			</ul>
 		</div>
 	</nav>
